@@ -11,12 +11,12 @@ The function should return the Gaussian values Gx computed at the indexes x
 
 
 def gauss(sigma):
-    sigma = int(sigma) #TODO: Is this useful?
+    sigma = int(sigma)
     Gx = np.array([])
     x = np.array([])
     for i in range(-3 * sigma, 3 * sigma + 1):
         Gx = np.append(Gx, (1 / math.sqrt(2 * math.pi * sigma ** 2)) * math.exp(-i ** 2 / (2 * sigma ** 2)))
-        x = np.append(x , i)
+        x = np.append(x, i)
     return Gx, x
 
 
@@ -30,7 +30,7 @@ Output: smoothed image
 
 
 def gaussianfilter(img, sigma):
-    smooth_img = []
+    smooth_img = []  # TODO: Why can't we start directly with a np array?
     for i in range(len(img)):
         smooth_img.append(np.convolve(img[i], gauss(sigma)[0], mode='valid'))
     smooth_img = np.transpose(np.array(smooth_img))
@@ -48,8 +48,12 @@ The function should return the Gaussian derivative values Dx computed at the ind
 
 
 def gaussdx(sigma):
-    # ...
-
+    sigma = int(sigma)
+    Dx = np.array([])
+    x = np.array([])
+    for i in range(-3 * sigma, 3 * sigma + 1):
+        Dx = np.append(Dx, (- i / math.sqrt(2 * math.pi * sigma ** 2)) * math.exp(-i ** 2 / (2 * sigma ** 2)))  # TODO: Why sigma^3 on the text?
+        x = np.append(x, i)
     return Dx, x
 
 
