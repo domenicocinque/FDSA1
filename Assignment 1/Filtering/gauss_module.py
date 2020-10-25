@@ -30,14 +30,14 @@ Output: smoothed image
 
 
 def gaussianfilter(img, sigma):
-    smooth_img = []  # TODO: Why can't we start directly with a np array?
+    smooth_img = []
     for i in range(len(img)):
         smooth_img.append(np.convolve(img[i], gauss(sigma)[0], mode='valid'))
     smooth_img = np.transpose(np.array(smooth_img))
     smooth_img2 = []
     for i in range(len(smooth_img)):
         smooth_img2.append(np.convolve(smooth_img[i], gauss(sigma)[0], mode='valid'))
-    return list(np.transpose(np.array(smooth_img2)))
+    return list(np.transpose(np.array(smooth_img2))) #TODO: This returns a list of np array
 
 
 """
@@ -58,6 +58,10 @@ def gaussdx(sigma):
 
 
 def gaussderiv(img, sigma):
-    # ...
-
+    [Gx, x] = gauss(sigma)
+    [Dx, x] = gaussdx(sigma)
+    Gx = Gx.reshape(1, Gx.size)
+    Dx = Dx.reshape(1, Dx.size)
+    imgDy = conv2(conv2(img, Gx, 'same'), Dx.T, 'same')
+    imgDx = conv2(conv2(img, Dx, 'same'), Gx.T, 'same')
     return imgDx, imgDy
