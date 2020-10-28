@@ -21,9 +21,18 @@ import gauss_module
 def normalized_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
-    bins = []
+    len_bins = 255//num_bins
     hists = [0]*num_bins
-    # Creare sottointervalli di bins, poi doppio ciclo sulla matrice per piazzare gli elementi
+    bins = [len_bins*1 for i in range(0, num_bins)]
+    x = np.array([len_bins]*img_gray[0])
+    arr = img_gray//x
+    for row in arr:
+        for elem in row:
+            hist[elem] += 1
+    s = sum(hists)
+    for i in range(len(hists)):
+        hists[i] = hists[i]/s
+
     return hists, bins
 
 
