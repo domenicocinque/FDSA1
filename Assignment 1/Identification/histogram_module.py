@@ -18,22 +18,24 @@ import gauss_module
 #
 #  img_gray - input image in grayscale format
 #  num_bins - number of bins in the histogram
+
 def normalized_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
-    len_bins = 255//num_bins
+    maxim, minim =  round(np.max(img_gray),4), round(np.min(img_gray),4)
+    len_bins = (maxim - minim)/num_bins
     hists = [0]*num_bins
-    bins = [len_bins*1 for i in range(0, num_bins)]
-    x = np.array([len_bins]*img_gray[0])
-    arr = img_gray//x
-    for row in arr:
+    bins = [minim]
+    for i in range(1, num_bins + 1):
+        bins.append(round(bins[i-1]+len_bins,4))
+    for row in img_gray:
         for elem in row:
-            hist[elem] += 1
-    s = sum(hists)
-    for i in range(len(hists)):
-        hists[i] = hists[i]/s
-
-    return hists, bins
+            for i in range(len(bins)):
+                if elem <= bins[i]:
+                    hists[i-1] += 1
+                    break
+    #hists, bins = np.histogram(img_gray, num_bins)
+    return np.array(hists), np.array(bins)
 
 
 
