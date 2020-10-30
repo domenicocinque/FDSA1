@@ -34,7 +34,9 @@ def normalized_hist(img_gray, num_bins):
                 if elem <= bins[i]:
                     hists[i-1] += 1
                     break
-    #hists, bins = np.histogram(img_gray, num_bins)
+    s = sum(hists)
+    for i in range(len(hists)):
+        hists[i] = hists[i] / s
     return np.array(hists), np.array(bins)
 
 
@@ -53,24 +55,19 @@ def normalized_hist(img_gray, num_bins):
 def rgb_hist(img_color_double, num_bins):
     assert len(img_color_double.shape) == 3, 'image dimension mismatch'
     assert img_color_double.dtype == 'float', 'incorrect image type'
-
-
-    #... (your code here)
-
+    n, m = img_color_double.shape[0], img_color_double.shape[1]
 
     #Define a 3D histogram  with "num_bins^3" number of entries
     hists = np.zeros((num_bins, num_bins, num_bins))
-    
-    # Loop for each pixel i in the image 
-    for i in range(img_color_double.shape[0]*img_color_double.shape[1]):
-        # Increment the histogram bin which corresponds to the R,G,B value of the pixel i
-        
-        #... (your code here)
-        pass
 
-
-    #Normalize the histogram such that its integral (sum) is equal 1
-    #... (your code here)
+    len_bins = round(255/num_bins, 4)
+    x = img_color_double.reshape(1, n * m, 3)/len_bins
+    x = np.array(x, dtype=int)
+    # Loop for each pixel i in the image
+    for i in range(n*m):
+       hists[0][x[0][i][0]][0] += 1
+       hists[1][x[0][i][1]][1] += 1
+       hists[2][x[0][i][2]][2] += 1
 
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
