@@ -67,6 +67,7 @@ def rgb_hist(img_color_double, num_bins):
     for i in range(n*m):
         i,j,k = x[0][i]
         hists[i,j,k] += 1
+    print(hists)
     s = np.sum(hists)
     hists = hists / s
     hists = hists.reshape(hists.size)
@@ -88,17 +89,22 @@ def rg_hist(img_color_double, num_bins):
     assert len(img_color_double.shape) == 3, 'image dimension mismatch'
     assert img_color_double.dtype == 'float', 'incorrect image type'
 
-
-    #... (your code here)
-
+    n, m = img_color_double.shape[0], img_color_double.shape[1]
+    hists_rgb = rgb_hist(img_color_double, num_bins)
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
-    
-    
-    #... (your code here)
 
+    len_bins = round(255 / num_bins, 4)
+    x = img_color_double.reshape(1, n * m, 3) / len_bins
+    x = np.array(x, dtype=int)
+    for i in range(n * m):
+        i, j, k = x[0][i]
+        hists[i, j] += 1
 
+    print(hists)
+    s = np.sum(hists)
+    hists = hists / s
     #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
 
