@@ -65,11 +65,10 @@ def rgb_hist(img_color_double, num_bins):
     x = np.array(x, dtype=int)
     # Loop for each pixel i in the image
     for i in range(n*m):
-       hists[0][x[0][i][0]][0] += 1
-       hists[1][x[0][i][1]][1] += 1
-       hists[2][x[0][i][2]][2] += 1
-
-    #Return the histogram as a 1D vector
+        i,j,k = x[0][i]
+        hists[i,j,k] += 1
+    s = np.sum(hists)
+    hists = hists / s
     hists = hists.reshape(hists.size)
     return hists
 
