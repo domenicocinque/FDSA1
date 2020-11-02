@@ -81,7 +81,7 @@ plt.show()
 
 
 
-## Distance functions (Question 2.c)
+# Distance functions (Question 2.c)
 
 image_files1 = ['./model/obj1__0.png']
 image_files2 = ['./model/obj91__0.png', './model/obj94__0.png']
@@ -153,72 +153,72 @@ print('%s-%s, %s-%s, %s-%s, %s-%s'%('l2', 'grayvalue', 'l2', 'rgb', 'l2', 'rg', 
 print('%s-%s, %s-%s, %s-%s, %s-%s'%('intersect', 'grayvalue', 'intersect', 'rgb', 'intersect', 'rg', 'intersect', 'dxdy'))
 print('%s-%s, %s-%s, %s-%s, %s-%s'%('chi2', 'grayvalue', 'chi2', 'rgb', 'chi2', 'rg', 'chi2', 'dxdy'))
 
-#
-#
-#
-#
-#
-# ## Find best match (Question 3.a)
-#
-# with open('model.txt') as fp:
-#     model_images = fp.readlines()
-# model_images = [x.strip() for x in model_images]
-#
-# with open('query.txt') as fp:
-#     query_images = fp.readlines()
-# query_images = [x.strip() for x in query_images]
-#
-# dist_type = 'intersect';
-# hist_type = 'rg';
-# num_bins = 30;
-#
-# [best_match, D] = match_module.find_best_match(model_images, query_images, dist_type, hist_type, num_bins)
-#
-#
-#
-# ## visualize nearest neighbors (Question 3.b)
-# query_images_vis = [query_images[i] for i in np.array([0,4,9])]
-# match_module.show_neighbors(model_images, query_images_vis, dist_type, hist_type, num_bins)
-#
-#
-#
-# ## compute recognition percentage (Question 3.c)
-# # import ipdb; ipdb.set_trace()
-# num_correct = sum( best_match == range(len(query_images)) )
-# print('number of correct matches: %d (%f)\n'% (num_correct, 1.0 * num_correct / len(query_images)))
-#
-#
-#
-#
-#
-#
-# ## plot recall_precision curves (Question 4)
-#
-# with open('model.txt') as fp:
-#     model_images = fp.readlines()
-# model_images = [x.strip() for x in model_images]
-#
-# with open('query.txt') as fp:
-#     query_images = fp.readlines()
-# query_images = [x.strip() for x in query_images]
-#
-# num_bins = 20;
-#
-#
-# plt.figure(8)
-# rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rg', num_bins, ['r', 'g', 'b'])
-# plt.title('RG histograms')
-# plt.show()
-#
-#
-# plt.figure(9)
-# rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rgb', num_bins // 2, ['r', 'g', 'b'])
-# plt.title('RGB histograms')
-# plt.show()
-#
-#
-# plt.figure(10)
-# rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'dxdy', num_bins, ['r', 'g', 'b'])
-# plt.title('dx/dy histograms')
-# plt.show()
-#
+
+
+
+
+
+## Find best match (Question 3.a)
+
+with open('model.txt') as fp:
+    model_images = fp.readlines()
+model_images = [x.strip() for x in model_images]
+
+with open('query.txt') as fp:
+    query_images = fp.readlines()
+query_images = [x.strip() for x in query_images]
+
+dist_type = 'intersect';
+hist_type = 'rg';
+num_bins = 30;
+
+[best_match, D] = match_module.find_best_match(model_images, query_images, dist_type, hist_type, num_bins)
+
+
+
+## visualize nearest neighbors (Question 3.b)
+query_images_vis = [query_images[i] for i in np.array([0,4,9])]
+match_module.show_neighbors(model_images, query_images_vis, dist_type, hist_type, num_bins)
+
+
+
+## compute recognition percentage (Question 3.c)
+# import ipdb; ipdb.set_trace()
+num_correct = sum( best_match == range(len(query_images)) )
+print('number of correct matches: %d (%f)\n'% (num_correct, 1.0 * num_correct / len(query_images)))
+
+
+
+
+
+
+## plot recall_precision curves (Question 4)
+
+with open('model.txt') as fp:
+    model_images = fp.readlines()
+model_images = [x.strip() for x in model_images]
+
+with open('query.txt') as fp:
+    query_images = fp.readlines()
+query_images = [x.strip() for x in query_images]
+
+num_bins = 20;
+
+
+plt.figure(8)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rg', num_bins, ['r', 'g', 'b'])
+plt.title('RG histograms')
+plt.show()
+
+
+plt.figure(9)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rgb', num_bins // 2, ['r', 'g', 'b'])
+plt.title('RGB histograms')
+plt.show()
+
+
+plt.figure(10)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'dxdy', num_bins, ['r', 'g', 'b'])
+plt.title('dx/dy histograms')
+plt.show()
+

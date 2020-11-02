@@ -123,17 +123,26 @@ def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
+    # Dx, Dy = gauss_module.gaussderiv(img_gray, 3.0)
+    # n = Dx.shape[0]
+    # Dx = Dx.reshape(1, n ** 2)[0]
+    # Dy = Dy.reshape(1, n ** 2)[0]
+    # Dxy = list(Dx.zip(Dy))
 
-    img_filt = gauss_module.gaussianfilter(img_gray, 3.0)
-
-    print(img_filt)
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
-    hists = hists.reshape(hists.size)
+    # len_bins = round(12 / num_bins, 4)
+    # bins = [-6]
+    # for i in range(1 , num_bins):
+    #     bins.append(round(bins[i - 1] + len_bins, 4))
+    # x = np.array(np.array(Dxy) / len_bins)
+    # x = np.floor(x[0])
+    # print(x)
+    # for i in range(n ** 2):
+    #     i, j = np.floor(x[0][i])
+    #     hists[i, j] += 1
 
-
-    #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
     return hists
 
