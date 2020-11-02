@@ -67,7 +67,6 @@ def rgb_hist(img_color_double, num_bins):
     for i in range(n*m):
         i,j,k = x[0][i]
         hists[i,j,k] += 1
-    print(hists)
     s = np.sum(hists)
     hists = hists / s
     hists = hists.reshape(hists.size)
@@ -102,7 +101,6 @@ def rg_hist(img_color_double, num_bins):
         i, j, k = x[0][i]
         hists[i, j] += 1
 
-    print(hists)
     s = np.sum(hists)
     hists = hists / s
     #Return the histogram as a 1D vector
@@ -126,14 +124,13 @@ def dxdy_hist(img_gray, num_bins):
     assert img_gray.dtype == 'float', 'incorrect image type'
 
 
-    #... (your code here)
+    img_filt = gauss_module.gaussianfilter(img_gray, 3.0)
 
-
+    print(img_filt)
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
-
-    #... (your code here)
+    hists = hists.reshape(hists.size)
 
 
     #Return the histogram as a 1D vector

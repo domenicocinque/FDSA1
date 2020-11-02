@@ -5,9 +5,9 @@ from numpy import histogram as hist  # call hist, otherwise np.histogram
 import matplotlib.pyplot as plt
 
 import histogram_module
-#import dist_module
-#import match_module
-#import rpc_module
+import dist_module
+import match_module
+import rpc_module
 
 
 
@@ -83,76 +83,76 @@ plt.show()
 
 ## Distance functions (Question 2.c)
 
-# image_files1 = ['./model/obj1__0.png']
-# image_files2 = ['./model/obj91__0.png', './model/obj94__0.png']
-#
-# plt.figure()
-# plt.subplot(1,3,1); plt.imshow(np.array(Image.open(image_files1[0])), vmin=0, vmax=255); plt.title(image_files1[0])
-# plt.subplot(1,3,2); plt.imshow(np.array(Image.open(image_files2[0])), vmin=0, vmax=255); plt.title(image_files2[0])
-# plt.subplot(1,3,3); plt.imshow(np.array(Image.open(image_files2[1])), vmin=0, vmax=255); plt.title(image_files2[1])
-# plt.show()
-#
-# img1_color = np.array(Image.open(image_files1[0]))
-# img2_color = np.array(Image.open(image_files2[0]))
-# num_bins_color = 30
-# hist1_rgb = histogram_module.rgb_hist(img1_color.astype('double'), num_bins_color)
-# hist2_rgb = histogram_module.rgb_hist(img2_color.astype('double'), num_bins_color)
-#
-# print('Distance according to dist_l2 %f'% dist_module.dist_l2(hist1_rgb,hist2_rgb))
-# print('Distance according to dist_interset %f'% dist_module.dist_intersect(hist1_rgb,hist2_rgb))
-# print('Distance according to dist_chi2 %f'% dist_module.dist_chi2(hist1_rgb,hist2_rgb))
-#
-#
-# distance_types = ['l2', 'intersect', 'chi2']
-# print('distance functions:', distance_types)
-#
-# hist_types = ['grayvalue', 'rgb', 'rg', 'dxdy']
-# print('histogram types:', hist_types)
-#
-# num_bins_color = 30;
-# num_bins_gray = 90;
-#
-# for img1_file in image_files1:
-#     img1_color = np.array(Image.open(img1_file))
-#     img1_color = img1_color.astype('double')
-#     img1_gray = rgb2gray(img1_color)
-#
-#     for img2_file in image_files2:
-#         img2_color = np.array(Image.open(img2_file))
-#         img2_color = img2_color.astype('double')
-#         img2_gray = rgb2gray(img2_color)
-#
-#         D = np.zeros( (len(distance_types),len(hist_types)) )
-#
-#         for didx in range(len(distance_types)):
-#
-#             for hidx in range(len(hist_types)):
-#
-#                 if histogram_module.is_grayvalue_hist(hist_types[hidx]):
-#                     hist1 = histogram_module.get_hist_by_name(img1_gray, num_bins_gray, hist_types[hidx])
-#                     hist2 = histogram_module.get_hist_by_name(img2_gray, num_bins_gray, hist_types[hidx])
-#
-#                 else:
-#                     hist1 = histogram_module.get_hist_by_name(img1_color, num_bins_color, hist_types[hidx])
-#                     hist2 = histogram_module.get_hist_by_name(img2_color, num_bins_color, hist_types[hidx])
-#
-#                 if len(hist1) == 2:
-#                     hist1 = hist1[0]
-#                 if len(hist2) == 2:
-#                     hist2 = hist2[0]
-#
-#                 D[didx, hidx] = dist_module.get_dist_by_name(hist1, hist2, distance_types[didx])
-#
-#         print('Comparison of images "%s" to "%s":'% (img1_file, img2_file))
-#         print(D)
-#         print('\n')
-#
-#
-# print('Legend:')
-# print('%s-%s, %s-%s, %s-%s, %s-%s'%('l2', 'grayvalue', 'l2', 'rgb', 'l2', 'rg', 'l2', 'dxdy'))
-# print('%s-%s, %s-%s, %s-%s, %s-%s'%('intersect', 'grayvalue', 'intersect', 'rgb', 'intersect', 'rg', 'intersect', 'dxdy'))
-# print('%s-%s, %s-%s, %s-%s, %s-%s'%('chi2', 'grayvalue', 'chi2', 'rgb', 'chi2', 'rg', 'chi2', 'dxdy'))
-#
+image_files1 = ['./model/obj1__0.png']
+image_files2 = ['./model/obj91__0.png', './model/obj94__0.png']
+
+plt.figure()
+plt.subplot(1,3,1); plt.imshow(np.array(Image.open(image_files1[0])), vmin=0, vmax=255); plt.title(image_files1[0])
+plt.subplot(1,3,2); plt.imshow(np.array(Image.open(image_files2[0])), vmin=0, vmax=255); plt.title(image_files2[0])
+plt.subplot(1,3,3); plt.imshow(np.array(Image.open(image_files2[1])), vmin=0, vmax=255); plt.title(image_files2[1])
+plt.show()
+
+img1_color = np.array(Image.open(image_files1[0]))
+img2_color = np.array(Image.open(image_files2[0]))
+num_bins_color = 30
+hist1_rgb = histogram_module.rgb_hist(img1_color.astype('double'), num_bins_color)
+hist2_rgb = histogram_module.rgb_hist(img2_color.astype('double'), num_bins_color)
+
+print('Distance according to dist_l2 %f'% dist_module.dist_l2(hist1_rgb,hist2_rgb))
+print('Distance according to dist_interset %f'% dist_module.dist_intersect(hist1_rgb,hist2_rgb))
+print('Distance according to dist_chi2 %f'% dist_module.dist_chi2(hist1_rgb,hist2_rgb))
+
+
+distance_types = ['l2', 'intersect', 'chi2']
+print('distance functions:', distance_types)
+
+hist_types = ['grayvalue', 'rgb', 'rg', 'dxdy']
+print('histogram types:', hist_types)
+
+num_bins_color = 30;
+num_bins_gray = 90;
+
+for img1_file in image_files1:
+    img1_color = np.array(Image.open(img1_file))
+    img1_color = img1_color.astype('double')
+    img1_gray = rgb2gray(img1_color)
+
+    for img2_file in image_files2:
+        img2_color = np.array(Image.open(img2_file))
+        img2_color = img2_color.astype('double')
+        img2_gray = rgb2gray(img2_color)
+
+        D = np.zeros( (len(distance_types),len(hist_types)) )
+
+        for didx in range(len(distance_types)):
+
+            for hidx in range(len(hist_types)):
+
+                if histogram_module.is_grayvalue_hist(hist_types[hidx]):
+                    hist1 = histogram_module.get_hist_by_name(img1_gray, num_bins_gray, hist_types[hidx])
+                    hist2 = histogram_module.get_hist_by_name(img2_gray, num_bins_gray, hist_types[hidx])
+
+                else:
+                    hist1 = histogram_module.get_hist_by_name(img1_color, num_bins_color, hist_types[hidx])
+                    hist2 = histogram_module.get_hist_by_name(img2_color, num_bins_color, hist_types[hidx])
+
+                if len(hist1) == 2:
+                    hist1 = hist1[0]
+                if len(hist2) == 2:
+                    hist2 = hist2[0]
+
+                D[didx, hidx] = dist_module.get_dist_by_name(hist1, hist2, distance_types[didx])
+
+        print('Comparison of images "%s" to "%s":'% (img1_file, img2_file))
+        print(D)
+        print('\n')
+
+
+print('Legend:')
+print('%s-%s, %s-%s, %s-%s, %s-%s'%('l2', 'grayvalue', 'l2', 'rgb', 'l2', 'rg', 'l2', 'dxdy'))
+print('%s-%s, %s-%s, %s-%s, %s-%s'%('intersect', 'grayvalue', 'intersect', 'rgb', 'intersect', 'rg', 'intersect', 'dxdy'))
+print('%s-%s, %s-%s, %s-%s, %s-%s'%('chi2', 'grayvalue', 'chi2', 'rgb', 'chi2', 'rg', 'chi2', 'dxdy'))
+
 #
 #
 #

@@ -37,7 +37,7 @@ def gaussianfilter(img, sigma):
     smooth_img2 = []
     for i in range(len(smooth_img)):
         smooth_img2.append(np.convolve(smooth_img[i], gauss(sigma)[0], mode='valid'))
-    return list(np.transpose(np.array(smooth_img2))) #TODO: This returns a list of np array
+    return list(np.transpose(np.array(smooth_img2)))
 
 
 """
@@ -52,7 +52,7 @@ def gaussdx(sigma):
     Dx = np.array([])
     x = np.array([])
     for i in range(-3 * sigma, 3 * sigma + 1):
-        Dx = np.append(Dx, (- i / math.sqrt(2 * math.pi * sigma ** 2)) * math.exp(-i ** 2 / (2 * sigma ** 2)))  # TODO: Why sigma^3 on the text?
+        Dx = np.append(Dx, (- i / (math.sqrt(2 * math.pi) * sigma ** 3)) * math.exp(-i ** 2 / (2 * sigma ** 2)))
         x = np.append(x, i)
     return Dx, x
 
