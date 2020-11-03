@@ -23,10 +23,10 @@ def plot_rpc(D, plot_color):
     assert(num_images == num_queries), 'Distance matrix should be a square matrix'
     
     labels = np.diag([1]*num_images)
-      
+
     d = D.reshape(D.size)
     l = labels.reshape(labels.size)
-     
+
     sortidx = d.argsort()
     d = d[sortidx]
     l = l[sortidx]
