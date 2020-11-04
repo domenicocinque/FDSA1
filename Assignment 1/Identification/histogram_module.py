@@ -67,6 +67,7 @@ def rgb_hist(img_color_double, num_bins):
     for i in range(n*m):
         i,j,k = x[0][i]
         hists[i,j,k] += 1
+
     s = np.sum(hists)
     hists = hists / s
     hists = hists.reshape(hists.size)
@@ -103,9 +104,7 @@ def rg_hist(img_color_double, num_bins):
 
     s = np.sum(hists)
     hists = hists / s
-    #Return the histogram as a 1D vector
     hists = hists.reshape(hists.size)
-
     return hists
 
 
@@ -145,6 +144,8 @@ def dxdy_hist(img_gray, num_bins):
         i, j = x[i]
         hists[i, j] += 1
 
+    s = np.sum(hists)
+    hists = hists / s
     hists = hists.reshape(hists.size)
     return hists
 
