@@ -23,61 +23,61 @@ def rgb2gray(rgb):
 
 
 
-## gray-value histograms (Question 2.a)
-
-img_color = np.array(Image.open('./model/obj100__0.png'))
-img_gray = rgb2gray(img_color.astype('double'))
-
-plt.figure(1)
-plt.subplot(1,3,1)
-plt.imshow(img_color)
-
-plt.subplot(1,3,2)
-num_bins_gray = 40
-hist_gray1, bin_gray1 = hist(img_gray.reshape(img_gray.size), num_bins_gray,(0,255))
-plt.bar((bin_gray1[0:-1] + bin_gray1[1:])/2, hist_gray1)
-
-plt.subplot(1,3,3)
-hist_gray2, bin_gray2 = histogram_module.normalized_hist(img_gray, num_bins_gray)
-plt.bar((bin_gray2[0:-1] + bin_gray2[1:])/2, hist_gray2)
-plt.show()
-
-
-
-## more histograms (Question 2.b)
-
-#Compose and test RGB histograms (histogram_module.rgb_hist)
-plt.figure(2)
-plt.subplot(1,2,1)
-plt.imshow(img_color)
-
-num_bins_color = 5
-plt.subplot(1,2,2)
-hist_rgb = histogram_module.rgb_hist(img_color.astype('double'), num_bins_color)
-plt.bar(np.array(range(1,hist_rgb.size+1)),hist_rgb)
-plt.show()
-
-#Compose and test RG histograms (histogram_module.rg_hist)
-plt.figure(3)
-plt.subplot(1,2,1)
-plt.imshow(img_color)
-
-num_bins_color = 5
-plt.subplot(1,2,2)
-hist_rg = histogram_module.rg_hist(img_color.astype('double'), num_bins_color)
-plt.bar(np.array(range(1,hist_rg.size+1)),hist_rg)
-plt.show()
-
-#Compose and test dxdy histograms (histogram_module.dxdy_hist)
-plt.figure(5)
-plt.subplot(1,2,1)
-plt.imshow(img_color)
-
-num_bins_dxdy = 10
-plt.subplot(1,2,2)
-hist_dxdy = histogram_module.dxdy_hist(img_gray, num_bins_dxdy)
-plt.bar(np.array(range(1,hist_dxdy.size+1)),hist_dxdy)
-plt.show()
+# ## gray-value histograms (Question 2.a)
+#
+# img_color = np.array(Image.open('./model/obj100__0.png'))
+# img_gray = rgb2gray(img_color.astype('double'))
+#
+# plt.figure(1)
+# plt.subplot(1,3,1)
+# plt.imshow(img_color)
+#
+# plt.subplot(1,3,2)
+# num_bins_gray = 40
+# hist_gray1, bin_gray1 = hist(img_gray.reshape(img_gray.size), num_bins_gray,(0,255))
+# plt.bar((bin_gray1[0:-1] + bin_gray1[1:])/2, hist_gray1)
+#
+# plt.subplot(1,3,3)
+# hist_gray2, bin_gray2 = histogram_module.normalized_hist(img_gray, num_bins_gray)
+# plt.bar((bin_gray2[0:-1] + bin_gray2[1:])/2, hist_gray2)
+# plt.show()
+#
+#
+#
+# ## more histograms (Question 2.b)
+#
+# #Compose and test RGB histograms (histogram_module.rgb_hist)
+# plt.figure(2)
+# plt.subplot(1,2,1)
+# plt.imshow(img_color)
+#
+# num_bins_color = 5
+# plt.subplot(1,2,2)
+# hist_rgb = histogram_module.rgb_hist(img_color.astype('double'), num_bins_color)
+# plt.bar(np.array(range(1,hist_rgb.size+1)),hist_rgb)
+# plt.show()
+#
+# #Compose and test RG histograms (histogram_module.rg_hist)
+# plt.figure(3)
+# plt.subplot(1,2,1)
+# plt.imshow(img_color)
+#
+# num_bins_color = 5
+# plt.subplot(1,2,2)
+# hist_rg = histogram_module.rg_hist(img_color.astype('double'), num_bins_color)
+# plt.bar(np.array(range(1,hist_rg.size+1)),hist_rg)
+# plt.show()
+#
+# #Compose and test dxdy histograms (histogram_module.dxdy_hist)
+# plt.figure(5)
+# plt.subplot(1,2,1)
+# plt.imshow(img_color)
+#
+# num_bins_dxdy = 10
+# plt.subplot(1,2,2)
+# hist_dxdy = histogram_module.dxdy_hist(img_gray, num_bins_dxdy)
+# plt.bar(np.array(range(1,hist_dxdy.size+1)),hist_dxdy)
+# plt.show()
 #
 #
 #
@@ -188,5 +188,36 @@ plt.show()
 # print('number of correct matches: %d (%f)\n'% (num_correct, 1.0 * num_correct / len(query_images)))
 #
 #
+## plot recall_precision curves (Question 4)
+
+with open('model.txt') as fp:
+    model_images = fp.readlines()
+model_images = [x.strip() for x in model_images]
+
+with open('query.txt') as fp:
+    query_images = fp.readlines()
+query_images = [x.strip() for x in query_images]
+
+num_bins = 20;
+
+
+plt.figure(8)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rg', num_bins, ['r', 'g', 'b'])
+plt.title('RG histograms')
+plt.show()
+
+
+plt.figure(9)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'rgb', num_bins // 2, ['r', 'g', 'b'])
+plt.title('RGB histograms')
+plt.show()
+
+
+plt.figure(10)
+rpc_module.compare_dist_rpc(model_images, query_images, ['chi2', 'intersect', 'l2'], 'dxdy', num_bins, ['r', 'g', 'b'])
+plt.title('dx/dy histograms')
+plt.show()
+
+
 
 

@@ -30,16 +30,13 @@ def plot_rpc(D, plot_color):
     sortidx = d.argsort()
     d = d[sortidx]
     l = l[sortidx]
-    
-    tp = 0
-    #... (your code here)
-    
-    for idt in range(len(d)):
-        tp += l[idt]
-        #... (your code here)
-        
-        #Compute precision and recall values and append them to "recall" and "precision" vectors
-        #... (your code here)
+
+    for thr in range(1, len(d)+1):
+        tp = sum(l[:thr])
+        fn = sum(l[thr:])
+        fp = thr - tp
+        precision.append(tp/(tp+fp))
+        recall.append(tp/(tp+fn))
     
     plt.plot([1-precision[i] for i in range(len(precision))], recall, plot_color+'-')
 

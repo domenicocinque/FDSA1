@@ -34,7 +34,7 @@ def dist_l2(x,y):
 def dist_chi2(x,y):
   for i in range(len(x)):
     if x[i] == 0 and y[i] == 0:
-      x[i] , y[i] = 1, 1
+      x[i] , y[i] = 0.001, 0.001
   out = np.sum(list(map(lambda q, v: (q-v)**2/(q+v), x, y)))
   return out
 
