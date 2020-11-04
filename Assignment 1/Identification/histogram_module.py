@@ -91,7 +91,7 @@ def rg_hist(img_color_double, num_bins):
     n, m = img_color_double.shape[0], img_color_double.shape[1]
     hists_rgb = rgb_hist(img_color_double, num_bins)
 
-    #Define a 2D histogram  with "num_bins^2" number of entries
+    # Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
     len_bins = round(255 / num_bins, 4)
@@ -123,25 +123,27 @@ def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
 
-    # Dx, Dy = gauss_module.gaussderiv(img_gray, 3.0)
-    # n = Dx.shape[0]
-    # Dx = Dx.reshape(1, n ** 2)[0]
-    # Dy = Dy.reshape(1, n ** 2)[0]
-    # Dxy = list(Dx.zip(Dy))
+    Dx, Dy = gauss_module.gaussderiv(img_gray, 3.0)
+    n = Dx.shape[0]
+    Dx = Dx.reshape(1, n ** 2)[0]
+    Dy = Dy.reshape(1, n ** 2)[0]
+    Dxy = []
+    for i in range(n):
+        Dxy.append((Dx[i],Dy[i]))
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
 
-    # len_bins = round(12 / num_bins, 4)
-    # bins = [-6]
-    # for i in range(1 , num_bins):
-    #     bins.append(round(bins[i - 1] + len_bins, 4))
-    # x = np.array(np.array(Dxy) / len_bins)
-    # x = np.floor(x[0])
-    # print(x)
-    # for i in range(n ** 2):
-    #     i, j = np.floor(x[0][i])
-    #     hists[i, j] += 1
+    len_bins = round(12 / num_bins, 4)
+    bins = [-6]
+    for i in range(1 , num_bins):
+        bins.append(round(bins[i - 1] + len_bins, 4))
+    x = np.array(np.array(Dxy) / len_bins)
+    x = np.floor(x)
+    x = np.array(x, dtype=int)
+    for i in range(len(x)):
+        i, j = x[i]
+        hists[i, j] += 1
 
     hists = hists.reshape(hists.size)
     return hists
