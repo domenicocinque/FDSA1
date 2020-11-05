@@ -22,21 +22,15 @@ import gauss_module
 def normalized_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
-    maxim, minim =  round(np.max(img_gray),4), round(np.min(img_gray),4)
-    len_bins = (maxim - minim)/num_bins
-    hists = [0]*num_bins
-    bins = [minim]
-    for i in range(1, num_bins + 1):
-        bins.append(round(bins[i-1]+len_bins,4))
-    for row in img_gray:
-        for elem in row:
-            for i in range(len(bins)):
-                if elem <= bins[i]:
-                    hists[i-1] += 1
-                    break
-    s = sum(hists)
-    for i in range(len(hists)):
-        hists[i] = hists[i] / s
+    len_bins = round(255/num_bins, 4)
+    hists = np.zeros(num_bins)
+    x = img_gray.reshape(img_gray.size) / len_bins
+    x = np.array(x, dtype=int)
+    bins = [len_bins*i for i in range(0,num_bins+1)]
+    for el in x:
+        hists[el] += 1
+
+    hists = hists / sum(hists)
     return np.array(hists), np.array(bins)
 
 
