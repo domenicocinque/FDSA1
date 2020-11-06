@@ -62,8 +62,7 @@ def rgb_hist(img_color_double, num_bins):
         i,j,k = x[0][i]
         hists[i,j,k] += 1
 
-    s = np.sum(hists)
-    hists = hists / s
+    hists = hists / np.sum(hists)
     hists = hists.reshape(hists.size)
     return hists
 
@@ -84,7 +83,6 @@ def rg_hist(img_color_double, num_bins):
     assert img_color_double.dtype == 'float', 'incorrect image type'
 
     n, m = img_color_double.shape[0], img_color_double.shape[1]
-    hists_rgb = rgb_hist(img_color_double, num_bins)
 
     # Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
@@ -96,8 +94,7 @@ def rg_hist(img_color_double, num_bins):
         i, j, k = x[0][i]
         hists[i, j] += 1
 
-    s = np.sum(hists)
-    hists = hists / s
+    hists = hists / np.sum(hists)
     hists = hists.reshape(hists.size)
     return hists
 
@@ -115,14 +112,20 @@ def rg_hist(img_color_double, num_bins):
 def dxdy_hist(img_gray, num_bins):
     assert len(img_gray.shape) == 2, 'image dimension mismatch'
     assert img_gray.dtype == 'float', 'incorrect image type'
-
     Dx, Dy = gauss_module.gaussderiv(img_gray, 3.0)
     n = Dx.shape[0]
     Dx = Dx.reshape(1, n ** 2)[0]
     Dy = Dy.reshape(1, n ** 2)[0]
     Dxy = []
     for i in range(n):
-        Dxy.append((Dx[i],Dy[i]))
+        Dxy.append([Dx[i],Dy[i]])
+
+    for elem in Dxy:
+        for i in range(2):
+            if elem[i] < -6:
+                elem[i] = -6
+            elif elem[i] > 6:
+                elem[i] = 6
 
     #Define a 2D histogram  with "num_bins^2" number of entries
     hists = np.zeros((num_bins, num_bins))
@@ -134,12 +137,12 @@ def dxdy_hist(img_gray, num_bins):
     x = np.array(np.array(Dxy) / len_bins)
     x = np.floor(x)
     x = np.array(x, dtype=int)
-    for i in range(len(x)):
-        i, j = x[i]
+
+    for k in range(len(x)):
+        i, j = x[k]
         hists[i, j] += 1
 
-    s = np.sum(hists)
-    hists = hists / s
+    hists = hists / np.sum(hists)
     hists = hists.reshape(hists.size)
     return hists
 
@@ -164,5 +167,5 @@ def get_hist_by_name(img, num_bins_gray, hist_name):
   elif hist_name == 'dxdy':
     return dxdy_hist(img, num_bins_gray)
   else:
-    assert False, 'unknown distance: %s'%hist_name
+    assert False, 'unknown histogram: %s'%hist_name
 

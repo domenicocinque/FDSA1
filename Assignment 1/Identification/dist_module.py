@@ -31,11 +31,13 @@ def dist_l2(x,y):
 # Check that the distance range in [0,Inf]
 # Add a minimum score to each cell of the histograms (e.g. 1) to avoid division by 0
 
-from scipy.stats import chisquare
+
 def dist_chi2(x,y):
   for i in range(len(x)):
-    if x[i] == 0 and y[i] == 0:
-      x[i] , y[i] = 0.001, 0.001
+    if x[i] == 0:
+      x[i] = 1
+    if y[i] == 0:
+      y[i] = 1
   out = np.sum(list(map(lambda q, v: (q-v)**2/(q+v), x, y)))
   return out
 

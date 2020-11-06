@@ -40,15 +40,18 @@ def find_best_match(model_images, query_images, dist_type, hist_type, num_bins):
     for i in range(len(D)):
         minim = np.min(D[i])
         best_match.append(np.where(D[i] == minim)[0][0])
-
-    return best_match, D
+    return np.array(best_match), D
 
 
 def compute_histograms(image_list, hist_type, hist_isgray, num_bins):
     image_hist = []
 
     for i in image_list:
-        image_hist.append(histogram_module.get_hist_by_name(np.array(Image.open(i)).astype('double'), num_bins, hist_type))
+        img = np.array(Image.open(i))
+
+        if hist_isgray == True:
+            img = rgb2gray(img.astype('double'))
+        image_hist.append(histogram_module.get_hist_by_name(img.astype('double'), num_bins, hist_type))
 
     return image_hist
 
@@ -77,13 +80,13 @@ def show_neighbors(model_images, query_images, dist_type, hist_type, num_bins):
             sl.append(model_images[int(index[1])])
         five_best.append(sl)
 
+
     for i_query in range(len(query_images)):
-        fig = plt.figure(i_query)
+        plt.figure()
         plt.subplot(1,6,1)
         plt.imshow(np.array(Image.open(query_images[i_query])), vmin = 0, vmax = 255)
         for n in range(2, 7):
             plt.subplot(1,6,n)
             plt.imshow(np.array(Image.open(five_best[i_query][n-2])), vmin = 0, vmax = 255)
-        #fig.add_subplot(i_query, 6, n)
-    plt.show()
+        plt.show()
 
